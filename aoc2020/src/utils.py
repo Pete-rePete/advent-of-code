@@ -12,12 +12,14 @@ def data(day_num):
 
 
 def load_list_int(fname):
-    print(__file__)
-    print(data_dir)
+    return [int(x) for x in load_list_str(fname)]
+
+def load_list_str(fname):
     with open(fname, 'r') as f:
         s = f.read()
-    return [int(x) for x in s.split('\n')]
+    return s.split('\n')
 
 advent_data_parser = {
-    1: load_list_int
+    1: load_list_int,
+    2: load_list_str
 }
