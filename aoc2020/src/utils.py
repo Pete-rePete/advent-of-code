@@ -19,7 +19,10 @@ def load_list_str(fname):
         s = f.read()
     return s.split('\n')
 
+
+
 advent_data_parser = {
     1: load_list_int,
-    2: load_list_str
+    2: load_list_str,
+    3: load_list_str,
 }
