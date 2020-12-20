@@ -12,17 +12,14 @@ def bs(fb, char):
 def get_rowcol(s):
     row = bs(s[:7], 'B')
     col = bs(s[7:], 'R')
-    id = row * 8 + col
-    return {'row':row, 'col':col, 'id':id}
+    return {'row':row, 'col':col, 'id': row * 8 + col}
 
 def part_a(data):
-    rowcols = [get_rowcol(x) for x in data]
-    ids = [x['id'] for x in rowcols]
+    ids = [get_rowcol(x)['id'] for x in data]
     return max(ids)
 
 def part_b(data):
-    rowcols = [get_rowcol(x) for x in data]
-    ids = sorted([x['id'] for x in rowcols])
+    ids = sorted([get_rowcol(x)['id'] for x in data])
     prev = ids[0]
     for id in ids:
         if id - prev > 1:
