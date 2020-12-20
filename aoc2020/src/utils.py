@@ -29,4 +29,5 @@ advent_data_parser = {
     2: load_list_str,
     3: load_list_str,
     4: load_str,
+    5: load_list_str,
 }
