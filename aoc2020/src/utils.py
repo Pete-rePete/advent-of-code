@@ -16,13 +16,17 @@ def load_list_int(fname):
 
 def load_list_str(fname):
     with open(fname, 'r') as f:
-        s = f.read()
+        s = f.read().strip()
     return s.split('\n')
 
-
+def load_str(fname):
+    with open(fname, 'r') as f:
+        s = f.read().strip()
+    return s
 
 advent_data_parser = {
     1: load_list_int,
     2: load_list_str,
     3: load_list_str,
+    4: load_str,
 }
