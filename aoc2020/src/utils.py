@@ -24,10 +24,15 @@ def load_str(fname):
         s = f.read().strip()
     return s
 
+def load_nn_lists_str(fname):
+    s = load_str(fname)
+    return [x.split() for x in s.split('\n\n')]
+
 advent_data_parser = {
     1: load_list_int,
     2: load_list_str,
     3: load_list_str,
     4: load_str,
     5: load_list_str,
+    6: load_nn_lists_str
 }
