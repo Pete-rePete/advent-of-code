@@ -1,4 +1,4 @@
-from aoc2020.src import utils
+from aoc2020 import utils
 import re
 
 def parse_str(passports):

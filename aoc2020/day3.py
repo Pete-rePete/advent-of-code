@@ -1,4 +1,4 @@
-from aoc2020.src import utils
+from aoc2020 import utils
 from numpy import prod
 
 def parse_str_list(l):

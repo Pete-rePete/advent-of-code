@@ -1,4 +1,4 @@
-from aoc2020.src import utils
+from aoc2020 import utils
 from collections import defaultdict
 
 def parse_pwd_data(pwd_data):

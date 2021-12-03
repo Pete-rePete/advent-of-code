@@ -1,13 +1,17 @@
-from aoc2020 import utils
+import os
+print('pythonpath!!',os.getenv("PYTHONPATH"),'\n\n')
+print('\n')
+from aoc2021 import utils
 
 def part_a(nums):
     print("part A")
-    search_set = set(2020-x for x in nums)
+    prev = float('inf')
+    increases = 0
     for num in nums:
-        if num in search_set:
-            print(num, "and", 2020-num, "are the numbers.")
-            print('the answer:', num * (2020-num))
-            break
+        if num > prev:
+            increases += 1
+        prev = num
+    return increases
 
 def part_b(nums):
     print("part B")
@@ -24,4 +28,4 @@ def part_b(nums):
 if __name__=='__main__':
     nums = utils.data(1)
     part_a(nums)
-    part_b(nums)
+    #part_b(nums)
