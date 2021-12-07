@@ -15,17 +15,17 @@ def part_a(nums):
 
 def part_b(nums):
     print("part B")
-    search_set = dict()
-    for x in nums:
-        for y in nums:
-            search_set[2020-x-y] = [x,y]
-    for num in nums:
-        if num in search_set.keys():
-            print(num, ",", search_set[num][0],",",search_set[num][1], "are the numbers.")
-            print('the answer:', num * search_set[num][0] * search_set[num][1])
-            break
+    prev = float('inf')
+    increases = 0
+    for i in range(3,len(nums)):
+        prev = nums[i-3] + nums[i-2] + nums[i-1]
+        curr = nums[i-2] + nums[i-1] + nums[i]
+        if curr > prev:
+            increases += 1
+    return increases
+    
 
 if __name__=='__main__':
     nums = utils.data(1)
-    part_a(nums)
-    #part_b(nums)
+    print(part_a(nums))
+    print(part_b(nums))
