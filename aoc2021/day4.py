@@ -5,19 +5,15 @@ def checkBoard(board,tracker):
     '''
     diag1 = all([board[i][i] in tracker for i in range(len(board))])
     diag2 = all([board[i][~i] in tracker for i in range(len(board))])
-    horizontals = any(
-        [
-            all(
-                [board[y][x] in tracker for x in range(len(board))]
-            ) for y in range(len(board))
-        ]
+    horizontals = any( # any row can be complete
+        [all( # all items in a row must have been called
+            [board[y][x] in tracker for x in range(len(board))]
+        ) for y in range(len(board))]
     )
     verticals = any(
-        [
-            all(
-                [board[y][x] in tracker for y in range(len(board))]
-            ) for x in range(len(board))
-        ]
+        [all(
+            [board[y][x] in tracker for y in range(len(board))]
+        ) for x in range(len(board))]
     )
     return any([diag1, diag2, verticals, horizontals])
     
@@ -33,20 +29,13 @@ def part_a(drawNums,boards):
     tracker = set()
     draw = 0
     setify = lambda board: set([x for row in board for x in row])
-    # too slow without checking hashset. Still slow
     boards = [[a,b] for a,b in zip(boards,[setify(board) for board in boards])]
-    winner = False
-    while not winner:
-        # Yes, we're taking heavy advantage of the fact we can trust AOC data.
-        #   you can whiletrue at home kids, but dont do it at work!
-        num = drawNums[draw]
+    for num in drawNums:
         tracker.add(num)
         if draw >= 4:
             for board, boardSet in boards:
-                if num in boardSet:
-                    if checkBoard(board, tracker):
-                        return boardRemainingSum(board, tracker) * num
-                        winner = True
+                if num in boardSet and checkBoard(board, tracker):
+                    return boardRemainingSum(board, tracker) * num
         draw += 1
 
 
