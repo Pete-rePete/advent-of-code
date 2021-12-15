@@ -24,7 +24,7 @@ def part_a(data):
                     points += pointMap[c]
                     badLine = True
                     break
-        if not badLine:
+        if badLine:
             incompleteStacks.append(stack)
     print(points)
     return incompleteStacks
@@ -37,16 +37,17 @@ def part_b(incompleteStacks):
     scores = []
     for stack in incompleteStacks:
         lineScore = 0
-        for c in stack[::-1]:
+        for c in stack:
             lineScore = lineScore*5 + pointMap[c]
         scores.append(lineScore)
-    print(sorted(scores)[len(scores)//2])
+    print(sorted(scores))
+    print(sorted(scores)[len(scores)//2+1])
 
     
 if __name__=='__main__':
     testData = get_data(test=True)
     data = get_data()
-    incompleteStacks = part_a(data)
+    incompleteStacks = part_a(testData)
     part_b(incompleteStacks)
 
     
