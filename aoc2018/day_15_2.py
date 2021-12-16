@@ -1,6 +1,7 @@
 # Advent of Code, day 15
 from collections import deque
 from time import sleep
+import traceback
 
 def neighbourCells(pos):
     y = pos[0]
@@ -147,13 +148,15 @@ def renderBoard(eGrid, units, round):
         y,x = u.pos
         board[y][x] = str(u)
     
-    
+    sleep(1)
     print('ROUND '+ str(round) + '\n' + '\n'.join([''.join(i) for i in board]) + '\n')
 
 def main(elfAP):
-    with open('day15.txt') as f:
+    print("WOOHA")
+    with open('aoc2018/day15.txt') as f:
         sMap = f.read()
     eGrid = {}
+    print("WAHOO")
     units = []
     # initialize the grid
     for y, line in enumerate(sMap.split('\n')):
@@ -168,12 +171,14 @@ def main(elfAP):
                 eGrid[(y,x)] = c
     #begin sim
     i=0
+    print("WEE")
     while len(set([u.faction for u in units if u.isAlive]))>1:
+        print("WOO")
         try:
             for unit in sorted(units, key=lambda c: readingOrder(c.pos)):
                 unit.takeTurn(eGrid, units)
             i+=1
-            #renderBoard(eGrid, units, round)
+            renderBoard(eGrid, units, round)
         except nothingToAttack:
             print('NOTHING TO ATTACK!')
             break
@@ -183,12 +188,15 @@ def main(elfAP):
 
 if __name__ == '__main__':
     # Iterate to get the correct AP
-    elfAP=1
+    elfAP=30
     failure=True
     while failure:
         try:
             failure, finalScore, winningFaction = main(elfAP)
-        except:
+        except Exception as e:
+            print(traceback.format_exc)
+            raise(e)
+
             elfAP+=1
 
     print('final elf attack power: ' + str(elfAP))
