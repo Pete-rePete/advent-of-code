@@ -44,16 +44,18 @@ class Octopus(object):
             self.energyLevel += 1
             self.evaluateFlash(turnNumber)
 
-    def getNeighbours(self):
-        positions = ((1,1),(1,0),(1,-1),(0,1),(0,-1),(-1,1),(-1,0),(-1,-1))
+    def inbounds(self, i, j):
         ylim = len(self.grid)
         xlim = len(self.grid[0])
-        # don't judge
-        return [self.grid[self.y+j][self.x+i] for i,j in positions if (self.y+j >=0 and self.y+j < ylim) and (self.x+i >=0 and self.x+i < xlim)]
+        return (self.y+j >=0 and self.y+j < ylim) and (self.x+i >=0 and self.x+i < xlim)
+
+    def getNeighbours(self):
+        positions = ((1,1),(1,0),(1,-1),(0,1),(0,-1),(-1,1),(-1,0),(-1,-1))
+        return [self.grid[self.y+j][self.x+i] for i,j in positions if self.inbounds(i, j)]
 
         
-def part_a(data):
-    print("part A")
+def part_a(data, turns=100, silent=False):
+    print("part A") if not silent else ''
     # I would argue octopi is far superior plural word than octopuses.
     octopi = []
     for y in range(len(data)):
@@ -61,27 +63,36 @@ def part_a(data):
         for x in range(len(data[0])):
             octopi[y].append(Octopus(int(data[y][x]), coords=(x,y),grid=octopi))
 
-    for i in range(100): 
+    for i in range(turns): 
         for line in octopi:
             for octopus in line:
                 octopus.takeTurn()
-    print('\n'.join(str(line) for line in octopi) + '\n'*2)
     o = Octopus(0)
-    bigO = sum([sum(line, o) for line in octopi], o)
-    print(bigO.flashes)
-    print([sum(line, o).flashes for line in octopi])
-        
-    
-    
+    if not silent:
+        print('\n'.join(str(line) for line in octopi) + '\n'*2)
+        bigO = sum([sum(line, o) for line in octopi], o)
+        print(bigO.flashes)
+    return octopi
 
-def part_b(incompleteStacks):
+
+def part_b(data):
     print("Part B")
-    
-    
+    # Could've done exponential exploration to find an upper bound, then 
+    #   binary search to be WAY more efficient but I'm tired and don't want to think
+    turns = 100
+    unanimous = False
+    while not unanimous:
+        octopi = part_a(data, turns=turns, silent=True)
+        if len(set([x.energyLevel for row in octopi for x in row])) == 1:
+            unanimous = True
+        else:
+            turns += 1
+    return turns
+
 if __name__=='__main__':
     testData = get_data(test=True)
     data = get_data()
     part_a(data)
-    #part_b(incompleteStacks)
+    print(part_b(data))
 
     
